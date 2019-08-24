@@ -11,17 +11,19 @@
 	SUB C, D		;C = length of program to load
 	
 	;move program to RAM
+moveByte:
+	CMP C, A
+	JZ end
 	MOV D, [B]
 	MOV [A], D
 	INC A
 	INC B
-	CMP C, A
-	HLT
-
-
-
+	JMP moveByte
+end:
+	HLT	;replace with special instruction that JMPs to 0 and makes processor read from RAM instead of ROM
 
 
 mainProgram:	;Program to load goes here
+	JMP end
 	DB "Hello"
 endOfMain:	;leave at end of program
